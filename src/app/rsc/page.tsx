@@ -1,4 +1,5 @@
 import ClientComponent from "@/components/ClientComponent";
+import Link from "next/link";
 
 export default function ServerComponent() {
   console.log("server");
@@ -6,6 +7,7 @@ export default function ServerComponent() {
     <div>
       サーバー
       <ClientComponent />
+      <Link href="/about">About</Link>
     </div>
   );
 }
