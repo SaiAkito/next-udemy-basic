@@ -1,23 +1,31 @@
 "use client";
+import { submitContactForm } from "@/lib/actions/contact";
+import { useActionState } from "react";
 
 export default function ContactForm() {
+  const [state, formAction] = useActionState(submitContactForm, {
+    success: false,
+    error: {},
+  });
   return (
     <div>
-      <form action="">
+      <form action={formAction}>
         <div className="py-24 text-gray-600">
           <div className="mx-auto flex flex-col bg-white shadow-md p-9 md:w-1/2">
             <h2 className="text-lg mb-2">お問い合わせ</h2>
-            <div className="mb-4"></div>
-            <label htmlFor="name" className="text-sm">
-              名前
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              className="w-full
+            <div className="mb-4">
+              <label htmlFor="name" className="text-sm">
+                名前
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                className="w-full
                          bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-indigo-200 outline-none py-1 px-3 leading-8"
-            />
+              />
+              {state?.error?.name && <p className="text-red-500 text-sm mt-1">{state.error.name.join(", ")}</p>}
+            </div>
             <div className="mb-4">
               <label htmlFor="email" className="text-sm">
                 メールアドレス
@@ -28,6 +36,7 @@ export default function ContactForm() {
                 name="email"
                 className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-indigo-200 outline-none py-1 px-3 leading-8"
               />
+              {state?.error?.email && <p className="text-red-500 text-sm mt-1">{state.error.email.join(", ")}</p>}
             </div>
             <button className="text-white bg-indigo-500 rounded py-2 px-6 hover:bg-indigo-600 text-lg">送信</button>
           </div>
